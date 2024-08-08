@@ -91,6 +91,14 @@ namespace TarodevController
             var runningTilt = _grounded ? Quaternion.Euler(0, 0, _maxTilt * _player.FrameInput.x) : Quaternion.identity;
             _anim.transform.up = Vector3.RotateTowards(_anim.transform.up, runningTilt * Vector2.up, _tiltSpeed * Time.deltaTime, 0f);
         }
+        public void HandlePlayerHurt()
+        {
+            _anim.SetTrigger(Hurt);
+        }
+        public void HandlePlayerDeath()
+        {
+            _anim.SetTrigger(Dead);
+        }
 
         private void OnJumped()
         {
@@ -148,5 +156,7 @@ namespace TarodevController
         private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
         private static readonly int JumpKey = Animator.StringToHash("Jump");
         private static readonly int Runkey = Animator.StringToHash("Run");
+        private static readonly int Hurt = Animator.StringToHash("Hurt");
+        private static readonly int Dead = Animator.StringToHash("Dead");
     }
 }

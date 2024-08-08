@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey.Utils;
+using UnityEngine.UIElements;
 
 
 public class PlayerAimWeapon : MonoBehaviour {
@@ -12,35 +14,40 @@ public class PlayerAimWeapon : MonoBehaviour {
     public class OnShootEventArgs : EventArgs {
         public Vector3 gunEndPointPosition;
         public Vector3 shootPosition;
-        public Vector3 shellPosition;
+        
     }
 
     
-   [SerializeField] private GameObject aimTransform;
-  
-   
-    private Transform aimGunEndPointTransform;
-    private Transform aimShellPositionTransform;
-    [SerializeField] private Animator aimAnimator;
+    [SerializeField] private GameObject aimTransform;
+    [SerializeField] private GameObject BulletParent;
+    [SerializeField] private GameObject BulletPrefab;
 
+    [SerializeField] private GameObject aimGunEndPointTransform;
+    [SerializeField] private Animator aimAnimator;
+    [SerializeField] private Material tracerMaterial;
+    private UImanager um;
+    private float FireCooldown = 0.2f;
+    private float timer = 0f;
+    private int ammo = 7;
+
+   
     private void Awake() {
 
-
+        um = FindObjectOfType<UImanager>();
         
-       // aimGunEndPointTransform = aimTransform.Find("GunEndPointPosition");
-        //aimShellPositionTransform = aimTransform.Find("ShellPosition");
+ 
     }
 
     private void Update() {
+        timer -= Time.deltaTime;
         HandleAiming();
         HandleShooting();
-       
+        
     }
 
     private void HandleAiming() {
 
         Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        print(vec);
         Vector3 aimDirection = (vec -  aimTransform.transform.position).normalized;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         aimTransform.transform.eulerAngles = new Vector3(0, 0, angle);
@@ -57,18 +64,80 @@ public class PlayerAimWeapon : MonoBehaviour {
     }
 
     private void HandleShooting() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && timer <= 0)
+        {
+
+            timer = FireCooldown;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             aimAnimator.SetTrigger("Shoot");
 
-            OnShoot?.Invoke(this, new OnShootEventArgs { 
-                gunEndPointPosition = aimGunEndPointTransform.position,
+            OnShoot?.Invoke(this, new OnShootEventArgs
+            {
+                gunEndPointPosition = aimGunEndPointTransform.transform.position,
                 shootPosition = mousePosition,
-                shellPosition = aimShellPositionTransform.position,
+
             });
+
+            Trace(aimGunEndPointTransform.transform.position, mousePosition);
+            Bullet newBullet = Instantiate(BulletPrefab, aimGunEndPointTransform.transform.position, Quaternion.identity).GetComponent<Bullet>();
+            newBullet.Setup((mousePosition - aimTransform.transform.position).normalized);
+            ammo -= 1;
+            um.ShotFired();
+            if (ammo == 0)
+            {
+               StartCoroutine(HandleReload());
+            }
         }
     }
+    private IEnumerator HandleReload()
+    {
+      
+        ammo = 7;
+        timer = 2f;
+        yield return new WaitForSeconds(2f);
+        um.ResetBuletts();
+        
+    }
+    public void Trace(Vector3 fromPosition, Vector3 targetPosition)
+    {
     
+        Vector3 shootDir = (targetPosition - fromPosition).normalized;
+        float distance = Vector3.Distance(fromPosition, targetPosition);
+        float shootAngle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
+        Vector3 spawnTracerPosition = fromPosition + shootDir * distance * .5f;
+     
+
+        tracerMaterial.SetTextureScale("_MainTex", new Vector2(1f, distance / 256f));
+       
+        World_Mesh worldMesh =  World_Mesh.Create( spawnTracerPosition, shootAngle - 90, 1f, distance, tracerMaterial, null, 10000);
+  
+        int frame = 0;
+        int frameBase = 0;
+
+        worldMesh.SetUVCoords(new World_Mesh.UVCoords(16 * frame + 64 * frameBase, 0, 16, 256));
+        float framerate = .016f;
+        float timer = framerate;
+    
+        FunctionUpdater.Create(delegate {
+            timer -= Time.deltaTime;
+            if (timer < 0)
+            {
+                timer += framerate;
+                frame++;
+                if (frame >= 4)
+                {
+                    worldMesh.DestroySelf();
+                    return true;
+                }
+                worldMesh.AddPosition(shootDir * 2f);
+                worldMesh.SetUVCoords(new World_Mesh.UVCoords(16 * frame + 64 * frameBase, 0, 16, 256));
+            }
+            return false;
+        });
+      
+    }
+
+
 
 }
