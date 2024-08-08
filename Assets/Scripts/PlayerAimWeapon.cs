@@ -25,24 +25,24 @@ public class PlayerAimWeapon : MonoBehaviour {
     [SerializeField] private GameObject aimGunEndPointTransform;
     [SerializeField] private Animator aimAnimator;
     [SerializeField] private Material tracerMaterial;
-
-    private float FireCooldown = 0.3f;
+    private UImanager um;
+    private float FireCooldown = 0.2f;
     private float timer = 0f;
-
+    private int ammo = 7;
 
    
     private void Awake() {
 
-
+        um = FindObjectOfType<UImanager>();
         
-      
+ 
     }
 
     private void Update() {
         timer -= Time.deltaTime;
         HandleAiming();
         HandleShooting();
-       
+        
     }
 
     private void HandleAiming() {
@@ -64,22 +64,40 @@ public class PlayerAimWeapon : MonoBehaviour {
     }
 
     private void HandleShooting() {
-        if (Input.GetMouseButtonDown(0) && timer<=0) {
+        if (Input.GetMouseButtonDown(0) && timer <= 0)
+        {
+
             timer = FireCooldown;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             aimAnimator.SetTrigger("Shoot");
 
-            OnShoot?.Invoke(this, new OnShootEventArgs { 
+            OnShoot?.Invoke(this, new OnShootEventArgs
+            {
                 gunEndPointPosition = aimGunEndPointTransform.transform.position,
                 shootPosition = mousePosition,
-               
+
             });
-        
+
             Trace(aimGunEndPointTransform.transform.position, mousePosition);
-            Bullet newBullet=  Instantiate(BulletPrefab,aimGunEndPointTransform.transform.position, Quaternion.identity).GetComponent<Bullet>();
+            Bullet newBullet = Instantiate(BulletPrefab, aimGunEndPointTransform.transform.position, Quaternion.identity).GetComponent<Bullet>();
             newBullet.Setup((mousePosition - aimTransform.transform.position).normalized);
+            ammo -= 1;
+            um.ShotFired();
+            if (ammo == 0)
+            {
+               StartCoroutine(HandleReload());
+            }
         }
+    }
+    private IEnumerator HandleReload()
+    {
+      
+        ammo = 7;
+        timer = 2f;
+        yield return new WaitForSeconds(2f);
+        um.ResetBuletts();
+        
     }
     public void Trace(Vector3 fromPosition, Vector3 targetPosition)
     {

@@ -10,11 +10,13 @@ public class Player : MonoBehaviour,IDamagable
     private PlayerAnimator animator;
     public float health;
     public bool Dead = false;
+    private UImanager um;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponentInChildren<PlayerAnimator>();
         health = 100f;
+        um= FindObjectOfType<UImanager>();
     }
 
     // Update is called once per frame
@@ -25,7 +27,8 @@ public class Player : MonoBehaviour,IDamagable
     public void Damage(float damage)
     {
         health -= damage;
-        if(health < 0)
+        um.TakeDamage();
+        if (health < 0)
         {
             animator.HandlePlayerDeath();
             Dead = true;
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour,IDamagable
         else
         {
             animator.HandlePlayerHurt();
+           
         }
 
     }
