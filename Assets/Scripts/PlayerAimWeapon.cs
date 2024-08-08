@@ -25,6 +25,11 @@ public class PlayerAimWeapon : MonoBehaviour {
     [SerializeField] private GameObject aimGunEndPointTransform;
     [SerializeField] private Animator aimAnimator;
     [SerializeField] private Material tracerMaterial;
+
+    private float FireCooldown = 0.3f;
+    private float timer = 0f;
+
+
    
     private void Awake() {
 
@@ -34,6 +39,7 @@ public class PlayerAimWeapon : MonoBehaviour {
     }
 
     private void Update() {
+        timer -= Time.deltaTime;
         HandleAiming();
         HandleShooting();
        
@@ -58,7 +64,8 @@ public class PlayerAimWeapon : MonoBehaviour {
     }
 
     private void HandleShooting() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && timer<=0) {
+            timer = FireCooldown;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             aimAnimator.SetTrigger("Shoot");

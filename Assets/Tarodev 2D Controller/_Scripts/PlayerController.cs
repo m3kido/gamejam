@@ -19,6 +19,7 @@ namespace TarodevController
         private FrameInput _frameInput;
         private Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
+        Player player;
 
         #region Interface
 
@@ -34,13 +35,14 @@ namespace TarodevController
         {
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
-
+            player= GetComponent<Player>();
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
         private void Update()
         {
             _time += Time.deltaTime;
+            if (player.Dead) { return; }
             GatherInput();
         }
 
