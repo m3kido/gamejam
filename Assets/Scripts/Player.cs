@@ -12,11 +12,14 @@ public class Player : MonoBehaviour,IDamagable
     public bool Dead = false;
     private UImanager um;
     // Start is called before the first frame update
+    private AudioSource source;
+    [SerializeField] AudioClip hurt ;
     void Start()
     {
         animator = GetComponentInChildren<PlayerAnimator>();
         health = 100f;
         um= FindObjectOfType<UImanager>();
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +31,8 @@ public class Player : MonoBehaviour,IDamagable
     {
         health -= damage;
         um.TakeDamage();
+        source.clip = hurt;
+        source.Play();
         if (health < 0)
         {
             animator.HandlePlayerDeath();

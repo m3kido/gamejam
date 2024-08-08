@@ -25,8 +25,13 @@ public class PlayerAimWeapon : MonoBehaviour {
     [SerializeField] private GameObject aimGunEndPointTransform;
     [SerializeField] private Animator aimAnimator;
     [SerializeField] private Material tracerMaterial;
+
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip shoot;
+    [SerializeField] private AudioClip reload;
+
     private UImanager um;
-    private float FireCooldown = 0.2f;
+    private float FireCooldown = 0.3f;
     private float timer = 0f;
     private int ammo = 7;
 
@@ -84,6 +89,8 @@ public class PlayerAimWeapon : MonoBehaviour {
             newBullet.Setup((mousePosition - aimTransform.transform.position).normalized);
             ammo -= 1;
             um.ShotFired();
+            source.clip = shoot;
+            source.Play();
             if (ammo == 0)
             {
                StartCoroutine(HandleReload());
@@ -95,6 +102,8 @@ public class PlayerAimWeapon : MonoBehaviour {
       
         ammo = 7;
         timer = 2f;
+        source.clip = reload;
+        source.Play();
         yield return new WaitForSeconds(2f);
         um.ResetBuletts();
         
