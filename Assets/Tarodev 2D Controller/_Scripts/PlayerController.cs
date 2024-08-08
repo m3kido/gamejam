@@ -50,7 +50,10 @@ namespace TarodevController
             {
                 JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
                 JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
+
+                //Raouf's changes
+                SlowMotion = Input.GetMouseButton(1)
             };
 
             if (_stats.SnapInput)
@@ -64,6 +67,18 @@ namespace TarodevController
                 _jumpToConsume = true;
                 _timeJumpWasPressed = _time;
             }
+
+
+            //Raouf's changes
+            if (_frameInput.SlowMotion)
+            {
+                Time.timeScale = 0.2f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+
         }
 
         private void FixedUpdate()
@@ -200,6 +215,9 @@ namespace TarodevController
         public bool JumpDown;
         public bool JumpHeld;
         public Vector2 Move;
+
+        //Raouf's changes
+        public bool SlowMotion;
     }
 
     public interface IPlayerController
