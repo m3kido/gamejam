@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TarodevController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour,IDamagable
@@ -90,22 +91,71 @@ public class Player : MonoBehaviour,IDamagable
         
     }
 
+    [SerializeField] GameObject clock;
+    [SerializeField] GameObject clockFill;
+
     private IEnumerator SlowMotionRoutine()
     {
         canUseSlowMotion = false;
 
         Time.timeScale = 0.2f;
-        yield return new WaitForSecondsRealtime(slowMotionDuration);
+
+        float progress = 1f;
+        float totalDuration = slowMotionDuration;
+
+        float elapsed = 0f;
+
+        while (elapsed < totalDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            progress = 1-Mathf.Clamp01(elapsed / totalDuration);
+
+            clock.GetComponent<Image>().fillAmount = progress;
+            clockFill.GetComponent<Image>().fillAmount = progress;
+            
+            yield return null;
+            
+        }
+
+        progress = 0f;
+        clock.GetComponent<Image>().fillAmount = progress;
+        clockFill.GetComponent<Image>().fillAmount = progress;
+
         Time.timeScale = 1f;
 
-        // Re-enable slow motion after cooldown
-        yield return new WaitForSecondsRealtime(cooldownDurationSlowMotion);
+
+
+
+
+        totalDuration = cooldownDurationSlowMotion;
+
+        elapsed = 0f;
+
+        while (elapsed < totalDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            progress = Mathf.Clamp01(elapsed / totalDuration);
+
+            clock.GetComponent<Image>().fillAmount = progress;
+            clockFill.GetComponent<Image>().fillAmount = progress;
+            
+            yield return null;
+            
+        }
+
+        progress = 1f;
+        clock.GetComponent<Image>().fillAmount = progress;
+        clockFill.GetComponent<Image>().fillAmount = progress;
+
         canUseSlowMotion = true;
+        
     }
 
 
     /*************************************************************************************************************************************/
 
+    [SerializeField] GameObject portal;
+    [SerializeField] GameObject portalFill;
     public void Teleport()
     {
         if (canTeleport && teleportCount < maxTeleports)
@@ -117,12 +167,13 @@ public class Player : MonoBehaviour,IDamagable
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = Camera.main.nearClipPlane;
             Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
+            
+            teleportCount++;
             StartCoroutine(TeleportAfterAnimation(targetPosition));
 
             Time.timeScale = 1f;
 
-            teleportCount++;
+            
             if (teleportCount >= maxTeleports)
             {
                 StartCoroutine(TeleportCooldown());
@@ -131,27 +182,56 @@ public class Player : MonoBehaviour,IDamagable
     }
     private IEnumerator TeleportAfterAnimation(Vector3 targetPosition)
     {
-        // Wait until the teleport animation finishes
+        float progress = 1f - (float)teleportCount / maxTeleports;  
+        Debug.Log(progress);
+        portal.GetComponent<Image>().fillAmount = progress;
+        portalFill.GetComponent<Image>().fillAmount = progress;
+        
         yield return new WaitForSeconds(animationDelay);
 
-        // check for collisions
+        // Check for collisions
         Collider2D hitCollider = Physics2D.OverlapCircle(targetPosition, radius);
 
-        // if no collision, teleport
+        // If no collision, teleport
         if (hitCollider == null)
         {
             transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
         }
-     
+
+        // Update the portal fill amount
+        
     }
     private IEnumerator TeleportCooldown()
-    {
+    {   
+        float progress = 0f;
+        float totalDuration = cooldownDurationTeleport;
         canTeleport = false;
-        yield return new WaitForSeconds(cooldownDurationTeleport);
+
+        float elapsed = 0f;
+
+        while (elapsed < totalDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            progress = Mathf.Clamp01(elapsed / totalDuration);
+
+            portal.GetComponent<Image>().fillAmount = progress;
+            portalFill.GetComponent<Image>().fillAmount = progress;
+            
+            yield return null;
+            
+        }
+
+        progress = 1f;
+        portal.GetComponent<Image>().fillAmount = progress;
+        portalFill.GetComponent<Image>().fillAmount = progress;
+
+        
+
         teleportCount = 0;
         canTeleport = true;
     }
 
+    /*************************************************************************************************************************************/
     private void OnTriggerEnter2D(Collider2D collider)
     {
         

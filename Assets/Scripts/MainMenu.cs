@@ -12,8 +12,4 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit Game");
         Application.Quit();
     }
-
-    public void Credits() {
-        Debug.Log("Credits");
-    }
 }
