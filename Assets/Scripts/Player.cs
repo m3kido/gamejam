@@ -14,10 +14,20 @@ public class Player : MonoBehaviour,IDamagable
     // Start is called before the first frame update
     private AudioSource source;
 
-
-    // radius for the overlap check
+    // Teleport variables
     private float radius = 0.5f;
     private float animationDelay = 0.2f;
+    private bool canTeleport = true;
+    private int teleportCount = 0;
+    private int maxTeleports = 2;
+    private float cooldownDurationTeleport = 10f;
+    
+
+    // Slow motion variables
+    private bool canUseSlowMotion = true;
+    private float slowMotionDuration = 5f;
+    private float cooldownDurationSlowMotion = 10f;
+
 
 
     [SerializeField] AudioClip hurt ;
@@ -34,6 +44,8 @@ public class Player : MonoBehaviour,IDamagable
     {
         
     }
+
+    /*************************************************************************************************************************************/
     public void Damage(float damage)
     {
         health -= damage;
@@ -53,25 +65,65 @@ public class Player : MonoBehaviour,IDamagable
         }
 
     }
+    private IEnumerator RestartSceneAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);  // Wait for the specified delay
+        Scene currentScene = SceneManager.GetActiveScene();  // Get the current scene
+        SceneManager.LoadScene(currentScene.name);  // Reload the current scene
+    }
 
+
+
+    /*************************************************************************************************************************************/
+
+    public void SlowMotion()
+    {
+        if (canUseSlowMotion)
+        {
+            StartCoroutine(SlowMotionRoutine());
+        }
+        
+    }
+
+    private IEnumerator SlowMotionRoutine()
+    {
+        canUseSlowMotion = false;
+
+        Time.timeScale = 0.2f;
+        yield return new WaitForSecondsRealtime(slowMotionDuration);
+        Time.timeScale = 1f;
+
+        // Re-enable slow motion after cooldown
+        yield return new WaitForSecondsRealtime(cooldownDurationSlowMotion);
+        canUseSlowMotion = true;
+    }
+
+
+    /*************************************************************************************************************************************/
 
     public void Teleport()
     {
+        if (canTeleport && teleportCount < maxTeleports)
+        {
+            Time.timeScale = 0.1f;
 
-        Time.timeScale = 0.1f;
+            animator.HandleTeleport();
 
-        animator.HandleTeleport();
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = Camera.main.nearClipPlane;
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        // mouse position
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Camera.main.nearClipPlane;
-        Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            StartCoroutine(TeleportAfterAnimation(targetPosition));
 
-        StartCoroutine(TeleportAfterAnimation(targetPosition));
+            Time.timeScale = 1f;
 
-        Time.timeScale = 1f;
+            teleportCount++;
+            if (teleportCount >= maxTeleports)
+            {
+                StartCoroutine(TeleportCooldown());
+            }
+        }
     }
-
     private IEnumerator TeleportAfterAnimation(Vector3 targetPosition)
     {
         // Wait until the teleport animation finishes
@@ -87,13 +139,17 @@ public class Player : MonoBehaviour,IDamagable
         }
      
     }
-
-    private IEnumerator RestartSceneAfterDelay()
+    private IEnumerator TeleportCooldown()
     {
-        yield return new WaitForSeconds(2f);  // Wait for the specified delay
-        Scene currentScene = SceneManager.GetActiveScene();  // Get the current scene
-        SceneManager.LoadScene(currentScene.name);  // Reload the current scene
+        canTeleport = false;
+        yield return new WaitForSeconds(cooldownDurationTeleport);
+        teleportCount = 0;
+        canTeleport = true;
     }
 
+
+
+
+    
 
 }
