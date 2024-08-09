@@ -42,7 +42,7 @@ namespace TarodevController
         private void Update()
         {
             _time += Time.deltaTime;
-         
+            if (player.Dead) { return; }
             GatherInput();
         }
 
