@@ -42,7 +42,11 @@ public class Player : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
-        
+        if(transform.position.y < -20) {
+            animator.HandlePlayerDeath();
+            Dead = true;
+            StartCoroutine(RestartSceneAfterDelay());
+        }
     }
 
     /*************************************************************************************************************************************/
@@ -147,9 +151,17 @@ public class Player : MonoBehaviour,IDamagable
         canTeleport = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        
+        if (collider.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene(0);
+
+        }
+    }
 
 
 
-    
 
 }
