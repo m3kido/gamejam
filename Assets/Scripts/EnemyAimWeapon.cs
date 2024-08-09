@@ -32,8 +32,8 @@ public class EnemyAimWeapon : MonoBehaviour
 
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip shoot;
-    
 
+    Enemy enemy;
  
 
 
@@ -41,13 +41,13 @@ public class EnemyAimWeapon : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
        
-
+        enemy=GetComponent<Enemy>();
 
     }
 
     private void Update()
     {
-        
+        if (enemy.Dead) { return; }
         HandleAiming(player.transform.position);
         if (PlayerVisible())
         {
