@@ -242,7 +242,7 @@ public class Player : MonoBehaviour,IDamagable
         }
     }
 
-    public void takeDamage(int damage)
+       public void takeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
@@ -250,8 +250,6 @@ public class Player : MonoBehaviour,IDamagable
             Destroy(gameObject);
         }
     }
-
-
 
 
 }
