@@ -7,7 +7,7 @@ using UnityEngine;
 public class enemieDamage : MonoBehaviour
 {
     [SerializeField] int damage;
-    public PlayerHealth health;
+    public Player player;
     //public Animator animator;
     public Transform playerTransform;
     public float Distance; 
@@ -21,7 +21,7 @@ public class enemieDamage : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" )
         { 
-            health.takeDamage(damage);
+            player.takeDamage(damage);
         }
     }
 }
