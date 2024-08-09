@@ -9,15 +9,19 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors: []
-  warnings:
-  - Pixels Per Unit mismatch between map (15) and tileset 'Terrain_and_Props.tsx'
-    (100)
+  errors:
+  - Errors detected in tileset 'BG_1.tsx'. Check the tileset inspector for more details.
+    Your map may be broken until these are fixed.
+  - Errors detected in tileset 'BG_2.tsx'. Check the tileset inspector for more details.
+    Your map may be broken until these are fixed.
+  - Errors detected in tileset 'BG_3.tsx'. Check the tileset inspector for more details.
+    Your map may be broken until these are fixed.
+  warnings: []
   missingSortingLayers: []
   missingLayers: []
   missingTags: []
   importerVersion: 26
-  pixelsPerUnit: 15
+  pixelsPerUnit: 100
   edgesPerEllipse: 32
   numberOfObjectsImported: 2
   tilesAsObjects: 0
