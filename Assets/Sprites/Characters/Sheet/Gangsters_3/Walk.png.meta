@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 20d453afae5918f48bebe25725cf4837
+guid: f6e89439971aa52478aeea3fbb3035d9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +50,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hurt_0
+      name: Walk_0
       rect:
         serializedVersion: 2
-        x: 38
+        x: 45
         y: 0
-        width: 42
-        height: 69
+        width: 34
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,19 +111,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 558701aedf774964082e11065fe86018
-      internalID: -316943495
+      spriteID: af4c61b9050a99644b854cba9fe86352
+      internalID: 1872532111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hurt_1
+      name: Walk_1
       rect:
         serializedVersion: 2
-        x: 162
+        x: 171
         y: 0
-        width: 40
+        width: 36
         height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -132,19 +132,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c9feb88953ded642b3bb2add9116829
-      internalID: -1013158049
+      spriteID: 469ecf37e8fcd894cbf3fd57dd52bf96
+      internalID: 2054001995
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hurt_2
+      name: Walk_2
       rect:
         serializedVersion: 2
-        x: 286
+        x: 300
         y: 0
-        width: 44
+        width: 30
         height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -153,19 +153,82 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e92530c5e2ddf64eb1082765e2c67ab
-      internalID: 1446657324
+      spriteID: d8581eb27e0e22041b97524fd567b33f
+      internalID: 237933126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hurt_3
+      name: Walk_3
       rect:
         serializedVersion: 2
-        x: 410
+        x: 435
         y: 0
-        width: 48
+        width: 17
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c47c6bd8be9f8d4cbcbcde422f4eb22
+      internalID: -1676131253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_4
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 0
+        width: 25
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e892a0a793466469b753a847362afd
+      internalID: -780637184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_5
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 0
+        width: 34
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d650831561928e49bd5d2f2408d9626
+      internalID: 178622963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_6
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 0
+        width: 35
         height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -174,8 +237,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95f4a48ce3aa488418fe9629ddaca48e
-      internalID: 1432855611
+      spriteID: a96afc5b38b45c043a72957062514b72
+      internalID: -410733056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_7
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 0
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b934fe5994baa114e90b0e070632fbe8
+      internalID: 185413600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_8
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 0
+        width: 20
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb16087aec13fae468e337e402e9b0cc
+      internalID: -784839181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_9
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 0
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5f35aeb939a0447833a9d78e105abb
+      internalID: 913326879
       vertices: []
       indices: 
       edges: []
@@ -191,10 +317,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hurt_0: -316943495
-      Hurt_1: -1013158049
-      Hurt_2: 1446657324
-      Hurt_3: 1432855611
+      Walk_0: 1872532111
+      Walk_1: 2054001995
+      Walk_2: 237933126
+      Walk_3: -1676131253
+      Walk_4: -780637184
+      Walk_5: 178622963
+      Walk_6: -410733056
+      Walk_7: 185413600
+      Walk_8: -784839181
+      Walk_9: 913326879
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

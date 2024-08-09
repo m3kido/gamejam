@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
-        transform.position += vec *500f*Time.deltaTime;
+        transform.position += vec *100f*Time.deltaTime;
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {

@@ -42,7 +42,7 @@ public class Player : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y < -20) {
+        if(transform.position.y < -20 && !Dead) { 
             animator.HandlePlayerDeath();
             Dead = true;
             StartCoroutine(RestartSceneAfterDelay());
@@ -52,6 +52,7 @@ public class Player : MonoBehaviour,IDamagable
     /*************************************************************************************************************************************/
     public void Damage(float damage)
     {
+        if (Dead) { return; }
         health -= damage;
         um.TakeDamage();
         source.clip = hurt;
