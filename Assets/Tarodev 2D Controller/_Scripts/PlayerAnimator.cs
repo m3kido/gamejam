@@ -104,7 +104,6 @@ namespace TarodevController
         // Raouf's changes
         public void HandleTeleport()
         {
-            Debug.Log("Teleporting");
             _anim.SetTrigger(TeleportKey);
         }
 

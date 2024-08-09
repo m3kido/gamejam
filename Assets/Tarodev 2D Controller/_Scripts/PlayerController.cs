@@ -75,7 +75,7 @@ namespace TarodevController
             //Raouf's changes
             if (_frameInput.SlowMotion)
             {
-                Time.timeScale = 0.2f;
+                player.SlowMotion();
             }
             else
             {
