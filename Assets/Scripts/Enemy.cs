@@ -17,9 +17,9 @@ public class Enemy : MonoBehaviour, IDamagable
     private AudioSource source;
 
 
-   
 
 
+    [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] AudioClip hurt;
     void Start()
     {
@@ -37,10 +37,12 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             right = !right;
             timer = bascule;
+            _sprite.flipX = true;
         }
         if (right)
         {
             transform.position += Vector3.right * 2 * Time.deltaTime;
+          
         }
         else
         {

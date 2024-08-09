@@ -85,7 +85,7 @@ public class EnemyAimWeapon : MonoBehaviour
     }
     private bool PlayerVisible()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < 15)
+        if (Vector3.Distance(transform.position, player.transform.position) < 12)
         {
             return true;
         }
