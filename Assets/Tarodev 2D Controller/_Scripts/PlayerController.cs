@@ -42,7 +42,7 @@ namespace TarodevController
         private void Update()
         {
             _time += Time.deltaTime;
-         
+            if (player.Dead) { return; }
             GatherInput();
         }
 
@@ -55,7 +55,8 @@ namespace TarodevController
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
 
                 //Raouf's changes
-                SlowMotion = Input.GetMouseButton(1)
+                SlowMotion = Input.GetMouseButton(1),
+                Teleport = Input.GetKeyDown(KeyCode.LeftShift)
             };
 
             if (_stats.SnapInput)
@@ -79,6 +80,13 @@ namespace TarodevController
             else
             {
                 Time.timeScale = 1f;
+            }
+
+            if (_frameInput.Teleport)
+            {
+      
+                player.Teleport();
+
             }
 
         }
@@ -220,6 +228,8 @@ namespace TarodevController
 
         //Raouf's changes
         public bool SlowMotion;
+
+        public bool Teleport;
     }
 
     public interface IPlayerController
