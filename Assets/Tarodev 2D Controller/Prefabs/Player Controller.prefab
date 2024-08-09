@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1544650614272011792}
   - component: {fileID: 1544650614272011793}
   - component: {fileID: 1544650614272011794}
-  - component: {fileID: 8670361693634579482}
   m_Layer: 4
   m_Name: Player Controller
   m_TagString: Untagged
@@ -111,20 +110,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.014424801}
   m_Size: {x: 0.9, y: 2.1437845}
   m_Direction: 0
---- !u!114 &8670361693634579482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1544650614272011804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd666001598b3445b95d44769be8b8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimTransform: {fileID: 2249722320547318032}
-  aimAnimator: {fileID: 4869899889103397304}
 --- !u!1 &2165936174508580520
 GameObject:
   m_ObjectHideFlags: 0

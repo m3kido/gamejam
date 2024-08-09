@@ -8,7 +8,7 @@ namespace TarodevController
     public class PlayerAnimator : MonoBehaviour
     {
         [Header("References")] [SerializeField]
-        private Animator _anim;
+        public Animator _anim;
 
         [SerializeField] private SpriteRenderer _sprite;
 
@@ -30,6 +30,7 @@ namespace TarodevController
         private IPlayerController _player;
         private bool _grounded;
         private ParticleSystem.MinMaxGradient _currentGradient;
+
 
         private void Awake()
         {
@@ -100,6 +101,13 @@ namespace TarodevController
             _anim.SetTrigger(Dead);
         }
 
+        // Raouf's changes
+        public void HandleTeleport()
+        {
+            Debug.Log("Teleporting");
+            _anim.SetTrigger(TeleportKey);
+        }
+
         private void OnJumped()
         {
             _anim.SetTrigger(JumpKey);
@@ -158,5 +166,8 @@ namespace TarodevController
         private static readonly int Runkey = Animator.StringToHash("Run");
         private static readonly int Hurt = Animator.StringToHash("Hurt");
         private static readonly int Dead = Animator.StringToHash("Dead");
+
+        // Raouf's changes
+        private static readonly int TeleportKey = Animator.StringToHash("Teleport");
     }
 }
